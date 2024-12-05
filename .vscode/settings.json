@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",
   "C_Cpp_Runner.debuggerPath": "gdb",
@@ -61,4 +62,10 @@
     "common_macros.h": "c",
     "adc.h": "c"
   }
+=======
+    "files.associations": {
+        "motors.h": "c",
+        "common_macros.h": "c"
+    }
+>>>>>>> c8b5fbaf775d33ed7bafced9204d3613c3e41891
 }

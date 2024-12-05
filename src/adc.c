@@ -19,3 +19,12 @@ void adc0_init(void)
     ADC0_SSCTL3_REG |= 0x6;
     ADC0_ACTSS_REG |= (1<<3);               /* enable ADC0 SS3 */
 }
+
+int adc0_temp(void)
+{
+    ADC0_PSSI_REG |= (1<<3);                /* Begin sampling on Sample Sequencer 3 */
+    while(!GET_BIT(ADC0_RIS_REG, 3));       /* wait for conversion to complete */
+    int temprature = ((ADC0_SSFIFO3_REG * 330) / 4096);
+    ADC0_ISC_REG |= (1<<3);                 /* clear completion flag  */
+    return temprature;
+}

@@ -2,6 +2,7 @@
 #include "common_macros.h"
 
 #include "./include/uart0.h"
+#include "./include/motors.h"
 
 void SysTick_Init(void)
 {
@@ -10,6 +11,8 @@ void SysTick_Init(void)
     SYSTICK_RELOAD_REG = 7999999;
     SYSTICK_CTRL_REG |= 0x05;
 }
+
+
 
 void Leds_Init(void)
 {
@@ -29,6 +32,7 @@ unsigned char recieved;
 int main(void)
 {
     uart0_init();
+    motors_init();
     // Leds_Init();
 
     // SysTick_Init();

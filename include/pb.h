@@ -7,10 +7,12 @@
 #include "tm4c123gh6pm_registers.h"
 #include "common_macros.h"
 
-#define PB_LEFT_MOTOR_OPEN_PIN              4
-#define PB_LEFT_MOTOR_CLOSE_PIN             5
-#define PB_RIGHT_MOTOR_OPEN_PIN             6
-#define PB_RIGHT_MOTOR_CLOSE_PIN            7
+// Gpio Port D
+
+#define PB_LEFT_MOTOR_OPEN_PIN              0
+#define PB_LEFT_MOTOR_CLOSE_PIN             1
+#define PB_RIGHT_MOTOR_OPEN_PIN             2
+#define PB_RIGHT_MOTOR_CLOSE_PIN            3
 
 
 extern volatile struct

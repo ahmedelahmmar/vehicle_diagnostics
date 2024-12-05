@@ -1,5 +1,4 @@
 #include "../include/adc.h"
-#include "adc.h"
 
 void adc0_init(void)
 {

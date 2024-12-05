@@ -11,18 +11,14 @@
 
 #define GPIO_PORTB_MIS_REG  (*(volatile unsigned long*)0x40005418)
 
-volatile struct
-{
-    unsigned char openLeftMotor       : 1;
-    unsigned char closeLeftMotor      : 1;
-    unsigned char stopLeftMotor       : 1;
-    unsigned char openRightMotor      : 1;
-    unsigned char closeRightMotor     : 1;
-    unsigned char stopRightMotor      : 1;
-    unsigned char isThereAnOpenRequest  : 1;
-    unsigned char isThereACloseRequest  : 1;
-
-} sFlags;
+volatile unsigned char openLeftMotor = 0;       
+volatile unsigned char closeLeftMotor = 0;    
+volatile unsigned char stopLeftMotor = 0;
+volatile unsigned char openRightMotor = 0;      
+volatile unsigned char closeRightMotor = 0;     
+volatile unsigned char stopRightMotor = 0;      
+volatile unsigned char isThereAnOpenRequest = 0;
+volatile unsigned char isThereACloseRequest = 0;  
 
 
 void pb_init (void)
@@ -39,8 +35,6 @@ void pb_init (void)
 
     SET_BIT(NVIC_EN0_REG, 3);    // interrupt enabled
     NVIC_PRI0_REG &= 0x00FFFFFF;     //set priority to zero
-
-    *(unsigned char*)&sFlags = 0;
 }
 
 
@@ -50,16 +44,16 @@ void pb_eventISR(void)
     {
         if (GPIO_PORTB_DATA_REG & PB_LEFT_MOTOR_OPEN_PIN) // rising edge
         {
-            sFlags.openLeftMotor = 1;
-            sFlags.stopLeftMotor = 0;
+            openLeftMotor = 1;
+            stopLeftMotor = 0;
         }
         else
         {
-            sFlags.openLeftMotor = 0;
-            sFlags.stopLeftMotor = 1;
+            openLeftMotor = 0;
+            stopLeftMotor = 1;
         }
 
-        sFlags.closeLeftMotor = 0;
+        closeLeftMotor = 0;
 
         return;
     }
@@ -67,16 +61,16 @@ void pb_eventISR(void)
     {
         if (GPIO_PORTB_DATA_REG & PB_LEFT_MOTOR_CLOSE_PIN) // rising edge
         {
-            sFlags.closeLeftMotor = 1;
-            sFlags.stopLeftMotor = 0;
+            closeLeftMotor = 1;
+            stopLeftMotor = 0;
         }
         else
         {
-            sFlags.closeLeftMotor = 0;
-            sFlags.stopLeftMotor = 1;
+            closeLeftMotor = 0;
+            stopLeftMotor = 1;
         }
 
-        sFlags.openLeftMotor = 0;
+        openLeftMotor = 0;
             
         return;
     }
@@ -84,16 +78,16 @@ void pb_eventISR(void)
     {
         if (GPIO_PORTB_DATA_REG & PB_RIGHT_MOTOR_OPEN_PIN) // rising edge
         {
-            sFlags.openRightMotor = 1;
-            sFlags.stopRightMotor = 0;
+            openRightMotor = 1;
+            stopRightMotor = 0;
         }
         else
         {
-            sFlags.openRightMotor = 0;
-            sFlags.stopRightMotor = 1;
+            openRightMotor = 0;
+            stopRightMotor = 1;
         }
 
-        sFlags.closeRightMotor = 0;
+        closeRightMotor = 0;
         
         return;   
     }
@@ -101,16 +95,16 @@ void pb_eventISR(void)
     {
         if (GPIO_PORTB_DATA_REG & PB_RIGHT_MOTOR_CLOSE_PIN) // rising edge
         {
-            sFlags.closeRightMotor = 1;
-            sFlags.stopRightMotor = 0;
+            closeRightMotor = 1;
+            stopRightMotor = 0;
         }
         else
         {   
-            sFlags.closeRightMotor = 0;
-            sFlags.stopRightMotor = 1;
+            closeRightMotor = 0;
+            stopRightMotor = 1;
         }
 
-        sFlags.openRightMotor = 0;
+        openRightMotor = 0;
 
         return;
     }

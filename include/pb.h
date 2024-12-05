@@ -14,19 +14,14 @@
 #define PB_RIGHT_MOTOR_OPEN_PIN             2
 #define PB_RIGHT_MOTOR_CLOSE_PIN            3
 
-
-extern volatile struct
-{
-    unsigned char openLeftMotor       : 1;
-    unsigned char closeLeftMotor      : 1;
-    unsigned char stopLeftMotor       : 1;
-    unsigned char openRightMotor      : 1;
-    unsigned char closeRightMotor     : 1;
-    unsigned char stopRightMotor      : 1;
-    unsigned char isThereAnOpenRequest  : 1;
-    unsigned char isThereACloseRequest  : 1;
-
-} sFlags;
+extern volatile unsigned char openLeftMotor;       
+extern volatile unsigned char closeLeftMotor;    
+extern volatile unsigned char stopLeftMotor;
+extern volatile unsigned char openRightMotor;      
+extern volatile unsigned char closeRightMotor;     
+extern volatile unsigned char stopRightMotor;      
+extern volatile unsigned char isThereAnOpenRequest;
+extern volatile unsigned char isThereACloseRequest;  
 
 
 void pb_init(void);

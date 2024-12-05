@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "motors.h": "c",
+        "common_macros.h": "c"
+    }
+}

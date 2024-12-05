@@ -1,8 +1,5 @@
-#include "tm4c123gh6pm_registers.h"
-#include "common_macros.h"
+#include "./include/app.h"
 
-#include "./include/uart0.h"
-#include "./include/motors.h"
 
 void SysTick_Init(void)
 {
@@ -31,6 +28,7 @@ unsigned char recieved;
 
 int main(void)
 {
+    pb_init();
     uart0_init();
     motors_init();
     // Leds_Init();
@@ -39,6 +37,8 @@ int main(void)
 
     while(1)
     {
+        handleMotors();
+
         recieved = uart0_getLastRecievedByte();
         if(recieved != 0xFF)
         {
@@ -46,6 +46,7 @@ int main(void)
             uart0_sendByte(recieved);
             uart0_sendString("\n\r");
         }
+        
 //        while(GET_BIT(SYSTICK_CTRL_REG, 16) == 0);
     }
 }

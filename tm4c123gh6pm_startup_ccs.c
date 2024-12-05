@@ -42,6 +42,7 @@ static void IntDefaultHandler(void);
 //*****************************************************************************
 extern void _c_int00(void);
 extern void uart0_receiveByteISR(void);
+extern void pb_eventISR(void);
 
 //*****************************************************************************
 //
@@ -87,7 +88,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port A
     IntDefaultHandler,                      // GPIO Port B
     IntDefaultHandler,                      // GPIO Port C
-    IntDefaultHandler,                      // GPIO Port D
+    pb_eventISR,                            // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E
     uart0_receiveByteISR,                   // UART0 Rx and Tx
     IntDefaultHandler,                      // UART1 Rx and Tx

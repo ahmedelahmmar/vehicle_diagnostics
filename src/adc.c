@@ -12,11 +12,17 @@ void adc0_init(void)
     GPIO_PORTE_DEN_REG &= ~(1<<3);          /* disable digital function */
     GPIO_PORTE_AMSEL_REG |= (1<<3);         /* enable analog function */
 
+    /* initialize sample sequencer3 */
     ADC0_ACTSS_REG &= ~(1<<3);              /* disable SS3 during configuration */
     ADC0_EMUX_REG &= ~(0xF000);             /* software trigger conversion */
     ADC0_SSMUX3_REG = 0;
     ADC0_SSCTL3_REG |= 0x6;
-    ADC0_ACTSS_REG |= (1<<3);               /* enable ADC0 SS3 */
+
+    /* Enable ADC Interrupt */
+    ADC0_IM_REG |= (1<<3);                  /* enable SS3 interrupt */
+    NVIC_EN0_REG |= (1<<17);                /* enable ADC0 interrupt in NVIC */
+    NVIC_PRI4_REG = (NVIC_PRI4_REG & 0xFFFF00FF) | 0x00004000; /* set priority to 2 */
+    ADC0_ACTSS_REG |= (1<<3);               /* Re-enable ADC0 SS3 */
 }
 
 int adc0_temp(void)
@@ -26,4 +32,14 @@ int adc0_temp(void)
     int temprature = ((ADC0_SSFIFO3_REG * 330) / 4096);
     ADC0_ISC_REG |= (1<<3);                 /* clear completion flag  */
     return temprature;
+}
+
+void adc0_handler(void)
+{
+    int temprature = adc0_temp();
+    ADC0_ISC_REG |= (1<<3);                 /* clear completion flag  */
+    if(temprature >= THRESHOLD_TEMP)
+    {
+        uart0_sendString("High Temprature Detected!\n");
+    }
 }

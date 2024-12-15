@@ -43,6 +43,7 @@ static void IntDefaultHandler(void);
 extern void _c_int00(void);
 extern void uart0_receiveByteISR(void);
 extern void pb_eventISR(void);
+extern void adc0_handler(void);
 
 //*****************************************************************************
 //
@@ -102,7 +103,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // ADC Sequence 0
     IntDefaultHandler,                      // ADC Sequence 1
     IntDefaultHandler,                      // ADC Sequence 2
-    IntDefaultHandler,                      // ADC Sequence 3
+    adc0_handler,                      // ADC Sequence 3
     IntDefaultHandler,                      // Watchdog timer
     IntDefaultHandler,                      // Timer 0 subtimer A
     IntDefaultHandler,                      // Timer 0 subtimer B

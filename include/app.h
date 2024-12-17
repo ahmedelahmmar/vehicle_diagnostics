@@ -7,6 +7,8 @@
 #include "./include/uart0.h"
 #include "./include/motors.h"
 #include "./include/pb.h"
+#include "../include/LCD.h"
+
 
 void handleMotors(void);
 

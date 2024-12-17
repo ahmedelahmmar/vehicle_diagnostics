@@ -28,25 +28,11 @@ unsigned char recieved;
 
 int main(void)
 {
-    pb_init();
-    uart0_init();
-    motors_init();
-    // Leds_Init();
+    LCD_init(); // Initialize the LCD
 
-    // SysTick_Init();
 
-    while(1)
-    {
-        handleMotors();
-
-        recieved = uart0_getLastRecievedByte();
-        if(recieved != 0xFF)
+        while(1)
         {
-            uart0_sendString("tiva recieved: ");
-            uart0_sendByte(recieved);
-            uart0_sendString("\n\r");
+            LCD_print("Hello, World!"); // Display message on the LCD
         }
-        
-//        while(GET_BIT(SYSTICK_CTRL_REG, 16) == 0);
-    }
 }

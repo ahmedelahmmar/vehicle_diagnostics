@@ -44,6 +44,7 @@ extern void _c_int00(void);
 extern void uart0_receiveByteISR(void);
 extern void pb_eventISR(void);
 extern void adc0_handler(void);
+extern void GPIO_PortB_Handler(void);
 
 //*****************************************************************************
 //
@@ -87,7 +88,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // The PendSV handler
     IntDefaultHandler,                      // The SysTick handler
     IntDefaultHandler,                      // GPIO Port A
-    IntDefaultHandler,                      // GPIO Port B
+    GPIO_PortB_Handler,                      // GPIO Port B
     IntDefaultHandler,                      // GPIO Port C
     pb_eventISR,                            // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E

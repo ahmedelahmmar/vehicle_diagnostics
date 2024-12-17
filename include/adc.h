@@ -6,6 +6,7 @@
 #include "uart0.h"
 
 #define THRESHOLD_TEMP         90
+#define ERROR_CODE "P002 - ENGINE_HIGH_TEMPERATURE"
 
 #define ADC0_ACTSS_REG          (*((volatile unsigned long *)0x40038000))
 #define ADC0_RIS_REG            (*((volatile unsigned long *)0x40038004))

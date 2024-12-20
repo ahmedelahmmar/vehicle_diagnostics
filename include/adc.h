@@ -20,6 +20,5 @@
 
 void adc0_init(void);
 int adc0_temp(void);
-void adc0_handler(void); // ADC Interrupt Handler
 
 #endif /* __ADC_H__ */

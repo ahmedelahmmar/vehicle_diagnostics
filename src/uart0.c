@@ -67,6 +67,11 @@ void uart0_sendString(unsigned char * const buffer)
     }
 }
 
+void uart0_print_str(char* s)
+{
+    while (*s != 0)                 /* if not end of string */
+        uart0_sendByte(*s++);              /* send the character through UART0 */
+}
 
 
 unsigned char uart0_getLastRecievedByte(void)

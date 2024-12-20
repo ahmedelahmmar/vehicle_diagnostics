@@ -21,6 +21,7 @@
 void uart0_init(void);
 void uart0_sendByte(unsigned char data);
 void uart0_sendString(unsigned char * const buffer);
+void uart0_print_str(char* s);
 unsigned char uart0_getLastRecievedByte(void);
 
 #endif /* UART_H */

@@ -1,5 +1,6 @@
 #include "./include/app.h"
-
+#include <stdio.h>
+#include <stdint.h>
 
 void SysTick_Init(void)
 {
@@ -8,8 +9,6 @@ void SysTick_Init(void)
     SYSTICK_RELOAD_REG = 7999999;
     SYSTICK_CTRL_REG |= 0x05;
 }
-
-
 
 void Leds_Init(void)
 {
@@ -24,15 +23,27 @@ void Leds_Init(void)
     GPIO_PORTF_DATA_REG  &= 0xF1;
 }
 
-unsigned char recieved;
+void delayMs(int n)
+{
+    int32_t i, j;
+    for(i = 0 ; i < n; i++)
+        for(j = 0; j < 3180; j++)
+            {;}  /* do nothing for 1 ms */
+}
+
+char temp_str[18];
+int temp;
 
 int main(void)
 {
-    LCD_init(); // Initialize the LCD
+    adc0_init();
+    uart0_init();
 
-
-        while(1)
-        {
-            LCD_print("Hello, World!"); // Display message on the LCD
-        }
+    while(1)
+    {
+        temp = adc0_temp();
+        sprintf(temp_str, "\r\nTemp = %dC", temp);
+        uart0_print_str(temp_str);
+        delayMs(1000);
+    }
 }

@@ -1,8 +1,9 @@
 #ifndef __LCD_H__
 #define __LCD_H__
 
-#include "../include/gpio.h"
-#include "../include/ultrasonic.h"
+#include "gpio.h"
+#include "ultrasonic.h"
+#include "../common_macros.h"
 /*
  * Pin Connections for LCD with Tiva C (Port C and Port D) in 4-bit mode:
  * ------------------------------------------------------------
@@ -26,8 +27,8 @@
 #define LCD_EN_PORT     GPIOD
 #define LCD_EN_PIN      GPIO_PIN_2
 
-#define LCD_D4_PORT     GPIOC
-#define LCD_D4_PIN      GPIO_PIN_4
+#define LCD_D4_PORT     GPIOD
+#define LCD_D4_PIN      GPIO_PIN_3
 
 #define LCD_D5_PORT     GPIOC
 #define LCD_D5_PIN      GPIO_PIN_5

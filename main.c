@@ -34,17 +34,17 @@ int temp;
 
 int main(void)
 {
-    adc0_init();
+//    adc0_init();
     uart0_init();
-    LCD_init();
-    lcd_set_cursor(0, 0);
+    lcd_init();
+    lcd_set_cursor(1, 0);
     lcd_write_string("Hello, World!");
 
     while(1)
     {
-        temp = adc0_temp();
-        sprintf(temp_str, "\r\nTemp = %dC", temp);
-        uart0_print_str(temp_str);
-        delayMs(1000);
+//        temp = adc0_temp();
+//        sprintf(temp_str, "\r\nTemp = %dC", temp);
+//        uart0_print_str(temp_str);
+//        delayMs(1000);
     }
 }

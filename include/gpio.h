@@ -14,7 +14,7 @@ typedef enum
     GPIOF,
     GPIOE,
 
-} GPIO_Port_t;\
+} GPIO_Port_t;
 
 
 typedef enum
@@ -43,7 +43,7 @@ typedef enum
 
 typedef enum
 {
-    GPIO_LOW,
+    GPIO_LOW=0,
     GPIO_HIGH,
 
 } GPIO_Logic_t;

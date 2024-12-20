@@ -18,11 +18,11 @@
 
 #define NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND 364
 
-void delay_ms(unsigned long long n)
-{
-    volatile unsigned long long count = 0;
-    while(count++ < (NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND * n) );
-};
+#define delay_ms(n) \
+{\
+    volatile unsigned long long count = 0;\
+    while(count++ < (NUMBER_OF_ITERATIONS_PER_ONE_MILI_SECOND * n) );\
+}\
 
 /* Set a specific bit in any register */
 #define SET_BIT(REG,BIT) (REG|=(1<<BIT))

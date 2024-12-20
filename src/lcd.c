@@ -97,7 +97,8 @@ void lcd_clear_row(const uint8_t row)
     uint8_t buffer[17];
     lcd_set_cursor(row, 0);
 
-    for (uint8_t i = 0; i < 16; ++i) buffer[i] = 0x20;
+    uint8_t i = 0;
+    for (i; i < 16; ++i) buffer[i] = 0x20;
     buffer[16] = '\0';
 
     lcd_write_string(buffer);
@@ -107,26 +108,26 @@ void lcd_clear_row(const uint8_t row)
 
 static void lcd_send_high_nibble(const uint8_t data)
 {
-    gpio_setPinLogic(LCD_D4_PORT, LCD_D4_PIN, (data >> 4) & 0x01);
-    gpio_setPinLogic(LCD_D5_PORT, LCD_D5_PIN, (data >> 5) & 0x01);
-    gpio_setPinLogic(LCD_D6_PORT, LCD_D6_PIN, (data >> 6) & 0x01);
-    gpio_setPinLogic(LCD_D7_PORT, LCD_D7_PIN, (data >> 7) & 0x01);
+    gpio_setPinLogic(LCD_D4_PORT, LCD_D4_PIN, (GPIO_Logic_t)((data >> 4) & 0x01));
+    gpio_setPinLogic(LCD_D5_PORT, LCD_D5_PIN, (GPIO_Logic_t)((data >> 5) & 0x01));
+    gpio_setPinLogic(LCD_D6_PORT, LCD_D6_PIN, (GPIO_Logic_t)((data >> 6) & 0x01));
+    gpio_setPinLogic(LCD_D7_PORT, LCD_D7_PIN, (GPIO_Logic_t)((data >> 7) & 0x01));
 }
 
 
 static void lcd_send_low_nibble(const uint8_t data)
 {
-    gpio_setPinLogic(LCD_D4_PORT, LCD_D4_PIN, (data >> 0) & 0x01);
-    gpio_setPinLogic(LCD_D5_PORT, LCD_D5_PIN, (data >> 1) & 0x01);
-    gpio_setPinLogic(LCD_D6_PORT, LCD_D6_PIN, (data >> 2) & 0x01);
-    gpio_setPinLogic(LCD_D7_PORT, LCD_D7_PIN, (data >> 3) & 0x01);
+    gpio_setPinLogic(LCD_D4_PORT, LCD_D4_PIN, (GPIO_Logic_t)((data >> 0) & 0x01));
+    gpio_setPinLogic(LCD_D5_PORT, LCD_D5_PIN, (GPIO_Logic_t)((data >> 1) & 0x01));
+    gpio_setPinLogic(LCD_D6_PORT, LCD_D6_PIN, (GPIO_Logic_t)((data >> 2) & 0x01));
+    gpio_setPinLogic(LCD_D7_PORT, LCD_D7_PIN, (GPIO_Logic_t)((data >> 3) & 0x01));
 }
 
 
 static void lcd_send_enable(void)
 {
     gpio_setPinLogic(LCD_EN_PORT, LCD_EN_PIN, GPIO_HIGH);
-    Delay_MicroSecond(1);
+    delay_ms(1);
     gpio_setPinLogic(LCD_EN_PORT, LCD_EN_PIN, GPIO_LOW);
     delay_ms(2);
 }

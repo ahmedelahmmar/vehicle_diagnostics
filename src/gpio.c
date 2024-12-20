@@ -77,6 +77,7 @@ void gpio_initPin(GPIO_Port_t port, GPIO_Pin_t pin, GPIO_Direction_t direction)
         
         case GPIO_OUTPUT:
             SET_BIT(*DIR[port], pin);
+            CLEAR_BIT(*DATA[port], pin);
             break;
 
         default:    

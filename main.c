@@ -1,6 +1,4 @@
 #include "./include/app.h"
-#include <stdio.h>
-#include <stdint.h>
 
 void SysTick_Init(void)
 {
@@ -38,6 +36,9 @@ int main(void)
 {
     adc0_init();
     uart0_init();
+    LCD_init();
+    lcd_set_cursor(0, 0);
+    lcd_write_string("Hello, World!");
 
     while(1)
     {

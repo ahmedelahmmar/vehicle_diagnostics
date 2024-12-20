@@ -29,24 +29,30 @@ void delayMs(int n)
             {;}  /* do nothing for 1 ms */
 }
 
-char temp_str[18];
 int temp;
+int dist;
 
 int main(void)
 {
-//    adc0_init();
-    uart0_init();
+    adc0_init();
+    Ultrasonic_Init();
+
     lcd_init();
     lcd_set_cursor(0, 0);
-    lcd_write_string("Hello, World!");
+    lcd_write_string("T:");
     lcd_set_cursor(1, 0);
-    lcd_write_string("El 7yah 7lwa");
+    lcd_write_string("D:");
 
     while(1)
     {
-//        temp = adc0_temp();
-//        sprintf(temp_str, "\r\nTemp = %dC", temp);
-//        uart0_print_str(temp_str);
-//        delayMs(1000);
+        temp = adc0_temp();
+        lcd_set_cursor(0,2);
+        lcd_write_int(temp);
+
+        dist = Ultrasonic_ReadDistance();
+        lcd_set_cursor(1,2);
+        lcd_write_int(dist);
+    
+        delayMs(1000);
     }
 }

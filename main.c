@@ -37,8 +37,10 @@ int main(void)
 //    adc0_init();
     uart0_init();
     lcd_init();
-    lcd_set_cursor(1, 0);
+    lcd_set_cursor(0, 0);
     lcd_write_string("Hello, World!");
+    lcd_set_cursor(1, 0);
+    lcd_write_string("El 7yah 7lwa");
 
     while(1)
     {

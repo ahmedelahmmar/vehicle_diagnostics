@@ -37,19 +37,25 @@ void lcd_init(void)
 void lcd_send_command(const LCD_CommandsTypeDef command)
 {
     gpio_setPinLogic(LCD_RW_PORT, LCD_RW_PIN, GPIO_LOW);
+    delay_ms(1);
     gpio_setPinLogic(LCD_RS_PORT, LCD_RS_PIN, GPIO_LOW);
+    delay_ms(1);
 
     lcd_send_high_nibble(command);
     lcd_send_enable();
+    delay_ms(1);
     lcd_send_low_nibble(command);
     lcd_send_enable();
+    delay_ms(2);
 }
 
 
 void lcd_write_char(const uint8_t data)
 {
     gpio_setPinLogic(LCD_RW_PORT, LCD_RW_PIN, GPIO_LOW);
+    delay_ms(1);
     gpio_setPinLogic(LCD_RS_PORT, LCD_RS_PIN, GPIO_HIGH);
+    delay_ms(1);
 
     lcd_send_high_nibble(data);
     lcd_send_enable();
@@ -62,7 +68,8 @@ void lcd_write_string(const uint8_t *data)
 {
     if ((void*)0 != data)
     {
-        while (*data) lcd_write_char(*data++);
+        uint8_t i = 0;
+        while (data[i]) lcd_write_char(data[i++]);
     }
 }
 

@@ -21,14 +21,6 @@ void Leds_Init(void)
     GPIO_PORTF_DATA_REG  &= 0xF1;
 }
 
-void delayMs(int n)
-{
-    int32_t i, j;
-    for(i = 0 ; i < n; i++)
-        for(j = 0; j < 3180; j++)
-            {;}  /* do nothing for 1 ms */
-}
-
 int temp;
 int dist;
 
@@ -53,6 +45,6 @@ int main(void)
         lcd_set_cursor(1,2);
         lcd_write_int(dist);
     
-        delayMs(1000);
+        delay_ms(1000);
     }
 }

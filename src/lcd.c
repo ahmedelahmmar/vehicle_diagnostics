@@ -46,7 +46,7 @@ void lcd_send_command(const LCD_CommandsTypeDef command)
     delay_ms(1);
     lcd_send_low_nibble(command);
     lcd_send_enable();
-    delay_ms(2);
+    delay_ms(1);
 }
 
 
@@ -59,8 +59,10 @@ void lcd_write_char(const uint8_t data)
 
     lcd_send_high_nibble(data);
     lcd_send_enable();
+    delay_ms(1);
     lcd_send_low_nibble(data);
     lcd_send_enable();
+    delay_ms(1);
 }
 
 

@@ -3,15 +3,20 @@
 
 void motors_init(void)
 {
-    SET_BIT(SYSCTL_RCGCGPIO_REG, 1);
-    while (!GET_BIT(SYSCTL_PRGPIO_REG, 1));
+//    SET_BIT(SYSCTL_RCGCGPIO_REG, 1);
+//    while (!GET_BIT(SYSCTL_PRGPIO_REG, 1));
+//
+//    GPIO_PORTB_AMSEL_REG &= 0x0F;
+//    GPIO_PORTB_PCTL_REG  &= 0x0000FFFF;
+//    GPIO_PORTB_DIR_REG   |= 0xF0;
+//    GPIO_PORTB_AFSEL_REG &= 0xF0;
+//    GPIO_PORTB_DEN_REG   |= 0xF0;
+   gpio_initPin(GPIOB, GPIO_PIN_4, GPIO_OUTPUT);
+   gpio_initPin(GPIOB, GPIO_PIN_5, GPIO_OUTPUT);
+   gpio_initPin(GPIOB, GPIO_PIN_6, GPIO_OUTPUT);
+   gpio_initPin(GPIOB, GPIO_PIN_7, GPIO_OUTPUT);
 
-    GPIO_PORTB_AMSEL_REG &= 0x0F;
-    GPIO_PORTB_PCTL_REG  &= 0x0000FFFF;
-    GPIO_PORTB_DIR_REG   |= 0xF0;
-    GPIO_PORTB_AFSEL_REG &= 0xF0;
-    GPIO_PORTB_DEN_REG   |= 0xF0;
-    GPIO_PORTB_DATA_REG  &= 0x0F;
+
 }
 
 

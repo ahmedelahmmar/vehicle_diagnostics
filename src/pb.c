@@ -56,7 +56,7 @@ void pb_eventISR(void)
 
         closeLeftMotor = 0;
 
-        CLEAR_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_OPEN_PIN);
+        SET_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_OPEN_PIN);
         return;
     }
     else if (GPIO_PORTD_MIS_REG & PB_LEFT_MOTOR_CLOSE_PIN)
@@ -74,7 +74,7 @@ void pb_eventISR(void)
 
         openLeftMotor = 0;
 
-        CLEAR_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_CLOSE_PIN);    
+        SET_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_CLOSE_PIN);    
         return;
     }
     else if (GPIO_PORTD_MIS_REG & PB_RIGHT_MOTOR_OPEN_PIN)
@@ -92,7 +92,7 @@ void pb_eventISR(void)
 
         closeRightMotor = 0;
 
-        CLEAR_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_OPEN_PIN); 
+        SET_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_OPEN_PIN); 
         return;   
     }
     else if (GPIO_PORTD_MIS_REG & PB_RIGHT_MOTOR_CLOSE_PIN)
@@ -110,7 +110,7 @@ void pb_eventISR(void)
 
         openRightMotor = 0;
 
-        CLEAR_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_CLOSE_PIN); 
+        SET_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_CLOSE_PIN); 
         return;
     }
 }

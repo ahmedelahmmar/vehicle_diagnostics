@@ -27,40 +27,23 @@ int dist;
 
 int main(void)
 {
-<<<<<<< Updated upstream
+
     pb_init();
-    
+
     adc0_init();
     Ultrasonic_Init();
-=======
-    uint32_t fault_code;
-        EEPROM_init();
-        lcd_init();
-        //EEPROM_LogData(0, 0, 1);
-        fault_code= EEPROM_RetrieveData(0, 0);
-        lcd_set_cursor(0, 0);
-        lcd_write_string("Fault Code: ");
-        lcd_set_cursor(1, 0);
-
-            if (fault_code == 1)
-            {
-                lcd_write_string(DTC_ACCIDENT_MIGHT_HAPPENED);
-            }
-           else
-            {
-               lcd_write_string("NO FAULT");
-            }
->>>>>>> Stashed changes
-
 
     while(1)
     {
+        handleMotors();
+        temp = adc0_temp();
+        lcd_set_cursor(0,2);
+        lcd_write_int(temp);
 
-//
-//        dist = Ultrasonic_ReadDistance();
-//        lcd_set_cursor(1,2);
-//        lcd_write_int(dist);
-//
-//        delay_ms(1000);
+        dist = Ultrasonic_ReadDistance();
+        lcd_set_cursor(1,2);
+        lcd_write_int(dist);
+    
+        delay_ms(1000);
     }
 }

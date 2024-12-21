@@ -29,13 +29,17 @@ void motors_start(eMotor_t motor_id, eDir_t direction)
             switch (direction)
             {
                 case DIR_CW:
-                    SET_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN1_PIN);
-                    CLEAR_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN2_PIN);
+                    //SET_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN1_PIN);
+                    gpio_setPinLogic(GPIOB,LEFT_MOTOR_IN1_PIN,GPIO_HIGH);
+                    //CLEAR_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN2_PIN);
+                    gpio_setPinLogic(GPIOB, LEFT_MOTOR_IN2_PIN, GPIO_LOW);
                     break;
 
                 case DIR_CCW:
-                    CLEAR_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN1_PIN);
-                    SET_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN2_PIN);
+                    //CLEAR_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN1_PIN);
+                    gpio_setPinLogic(GPIOB, LEFT_MOTOR_IN1_PIN, GPIO_LOW);
+                    //SET_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN2_PIN);
+                    gpio_setPinLogic(GPIOB, LEFT_MOTOR_IN2_PIN, GPIO_HIGH);
                     break;
 
                 default: break;
@@ -47,13 +51,17 @@ void motors_start(eMotor_t motor_id, eDir_t direction)
             switch (direction)
             {
                 case DIR_CW:
-                    CLEAR_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN1_PIN);
-                    SET_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN2_PIN);
+                    //CLEAR_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN1_PIN);
+                    gpio_setPinLogic(GPIOB, RIGHT_MOTOR_IN1_PIN, GPIO_LOW);
+                    //SET_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN2_PIN);
+                    gpio_setPinLogic(GPIOB, RIGHT_MOTOR_IN2_PIN, GPIO_HIGH);
                     break;
 
                 case DIR_CCW:
-                    SET_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN1_PIN);
-                    CLEAR_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN2_PIN);
+                   // SET_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN1_PIN);
+                    gpio_setPinLogic(GPIOB, RIGHT_MOTOR_IN1_PIN, GPIO_HIGH);
+                    //CLEAR_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN2_PIN);
+                    gpio_setPinLogic(GPIOB, RIGHT_MOTOR_IN2_PIN, GPIO_LOW);
                     break;
 
                 default: break;
@@ -70,13 +78,18 @@ void motors_stop(eMotor_t motor_id)
     switch (motor_id)
     {
         case LEFT_MOTOR:
-            CLEAR_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN1_PIN);
-            CLEAR_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN2_PIN);
+            //CLEAR_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN1_PIN);
+            gpio_setPinLogic(GPIOB, LEFT_MOTOR_IN1_PIN, GPIO_LOW);
+            //CLEAR_BIT(GPIO_PORTB_DATA_REG, LEFT_MOTOR_IN2_PIN);
+            gpio_setPinLogic(GPIOB, LEFT_MOTOR_IN2_PIN, GPIO_LOW);
+
             break;
 
         case RIGHT_MOTOR:
-            CLEAR_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN1_PIN);
-            CLEAR_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN2_PIN);
+           // CLEAR_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN1_PIN);
+            gpio_setPinLogic(GPIOB, RIGHT_MOTOR_IN1_PIN, GPIO_LOW);
+            //CLEAR_BIT(GPIO_PORTB_DATA_REG, RIGHT_MOTOR_IN2_PIN);
+            gpio_setPinLogic(GPIOB, RIGHT_MOTOR_IN2_PIN, GPIO_HIGH);
             break;
     
         default:

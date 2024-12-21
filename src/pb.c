@@ -9,7 +9,7 @@
 #include "../include/pb.h"
 #include "../include/motors.h"
 
-#define GPIO_PORTB_MIS_REG  (*(volatile unsigned long*)0x40005418)
+#define GPIO_PORTD_MIS_REG  (*(volatile unsigned long*)0x40007418)
 
 volatile unsigned char openLeftMotor = 0;       
 volatile unsigned char closeLeftMotor = 0;    
@@ -23,7 +23,7 @@ volatile unsigned char isThereACloseRequest = 0;
 
 void pb_init (void)
 {
-    SET_BIT(SYSCTL_RCGCGPIO_REG,3); //Enable clock GPIO for port D
+    SET_BIT(SYSCTL_RCGCGPIO_REG, 3); //Enable clock GPIO for port D
     while (!GET_BIT(SYSCTL_PRGPIO_REG, 3));
 
     GPIO_PORTD_DIR_REG &= 0xF0;
@@ -40,7 +40,8 @@ void pb_init (void)
 
 void pb_eventISR(void)
 {
-    if (GPIO_PORTB_MIS_REG & PB_LEFT_MOTOR_OPEN_PIN)
+
+    if (GPIO_PORTD_MIS_REG & PB_LEFT_MOTOR_OPEN_PIN)
     {
         if (GPIO_PORTB_DATA_REG & PB_LEFT_MOTOR_OPEN_PIN) // rising edge
         {
@@ -55,9 +56,10 @@ void pb_eventISR(void)
 
         closeLeftMotor = 0;
 
+        CLEAR_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_OPEN_PIN);
         return;
     }
-    else if (GPIO_PORTB_MIS_REG & PB_LEFT_MOTOR_CLOSE_PIN)
+    else if (GPIO_PORTD_MIS_REG & PB_LEFT_MOTOR_CLOSE_PIN)
     {
         if (GPIO_PORTB_DATA_REG & PB_LEFT_MOTOR_CLOSE_PIN) // rising edge
         {
@@ -71,10 +73,11 @@ void pb_eventISR(void)
         }
 
         openLeftMotor = 0;
-            
+
+        CLEAR_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_CLOSE_PIN);    
         return;
     }
-    else if (GPIO_PORTB_MIS_REG & PB_RIGHT_MOTOR_OPEN_PIN)
+    else if (GPIO_PORTD_MIS_REG & PB_RIGHT_MOTOR_OPEN_PIN)
     {
         if (GPIO_PORTB_DATA_REG & PB_RIGHT_MOTOR_OPEN_PIN) // rising edge
         {
@@ -88,10 +91,11 @@ void pb_eventISR(void)
         }
 
         closeRightMotor = 0;
-        
+
+        CLEAR_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_OPEN_PIN); 
         return;   
     }
-    else if (GPIO_PORTB_MIS_REG & PB_RIGHT_MOTOR_CLOSE_PIN)
+    else if (GPIO_PORTD_MIS_REG & PB_RIGHT_MOTOR_CLOSE_PIN)
     {
         if (GPIO_PORTB_DATA_REG & PB_RIGHT_MOTOR_CLOSE_PIN) // rising edge
         {
@@ -106,6 +110,7 @@ void pb_eventISR(void)
 
         openRightMotor = 0;
 
+        CLEAR_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_CLOSE_PIN); 
         return;
     }
 }

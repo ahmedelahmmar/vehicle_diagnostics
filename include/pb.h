@@ -6,13 +6,22 @@
  */
 #include "tm4c123gh6pm_registers.h"
 #include "common_macros.h"
+#include "gpio.h"
 
 // Gpio Port D
 
-#define PB_LEFT_MOTOR_OPEN_PIN              0
-#define PB_LEFT_MOTOR_CLOSE_PIN             1
-#define PB_RIGHT_MOTOR_OPEN_PIN             2
-#define PB_RIGHT_MOTOR_CLOSE_PIN            3
+#define PB_LEFT_MOTOR_OPEN_PIN              GPIO_PIN_0
+#define PB_LEFT_MOTOR_OPEN_PORT             GPIOD
+
+#define PB_LEFT_MOTOR_CLOSE_PIN             GPIO_PIN_1
+#define PB_LEFT_MOTOR_CLOSE_PORT            GPIOD
+
+#define PB_RIGHT_MOTOR_OPEN_PIN             GPIO_PIN_2
+#define PB_RIGHT_MOTOR_OPEN_PORT            GPIOD
+
+#define PB_RIGHT_MOTOR_CLOSE_PIN            GPIO_PIN_3
+#define PB_RIGHT_MOTOR_CLOSE_PORT           GPIOD
+
 
 extern volatile unsigned char openLeftMotor;       
 extern volatile unsigned char closeLeftMotor;    

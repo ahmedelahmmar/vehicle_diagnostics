@@ -26,6 +26,8 @@ int dist;
 
 int main(void)
 {
+    pb_init();
+    
     adc0_init();
     Ultrasonic_Init();
 

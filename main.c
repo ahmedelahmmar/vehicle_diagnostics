@@ -20,27 +20,38 @@ int dist;
 
 int main(void)
 {
-
-//    pb_init();
+    pb_init();
 
     adc0_init();
 
     lcd_init();
+    delay_ms(200);
     lcd_set_cursor(0, 0);
     lcd_write_string("T:");
-    lcd_set_cursor(1, 0);
+    lcd_set_cursor(0, 5);
+    lcd_write_string("C");
+    lcd_set_cursor(0, 7);
     lcd_write_string("D:");
+    lcd_set_cursor(0, 13);
+    lcd_write_string("cm");
+    lcd_set_cursor(1, 0);
+    lcd_write_string("L:Closed");
+    lcd_set_cursor(1, 8);
+    lcd_write_string("R:Closed");
+
     Ultrasonic_Init();
 
     while(1)
     {
-//        handleMotors();
+        handleMotors();
         temp = adc0_temp();
         lcd_set_cursor(0,2);
         lcd_write_int(temp);
 
         dist = Ultrasonic_ReadDistance();
-        lcd_set_cursor(1,2);
+        lcd_set_cursor(0, 9);
+        lcd_write_string("    ");
+        lcd_set_cursor(0, 9);
         lcd_write_int(dist);
     
         delay_ms(1000);

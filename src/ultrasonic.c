@@ -52,10 +52,10 @@ uint32_t Ultrasonic_ReadDistance(void) {
     // Measure time while Echo signal is high
     while (GET_BIT(GPIO_PORTB_DATA_REG, ECHO_PIN) != 0) {
         duration++;
-        SysTick_Wait10us(1);
+        SysTick_Wait(8);
     }
 
-    distance = (duration * 340.0) / (2 * 1000); // Convert to cm
+    distance = (duration) / (117.6); // Convert to cm
 
     return distance;
 }

@@ -6,25 +6,23 @@ void handleMotors(void)
     isThereAnOpenRequest = openLeftMotor or openRightMotor;
     isThereACloseRequest = closeLeftMotor or closeRightMotor;
 
-    lcd_clear_row(1);
-
-    lcd_write_string("LW:");
-    lcd_set_cursor(1, 8);
-    lcd_write_string("RW:");
-
     if (isThereAnOpenRequest)
     {
         if (openLeftMotor)
         {
             motors_start(LEFT_MOTOR, DIR_CW);
-            lcd_set_cursor(1, 3);
+            lcd_set_cursor(1, 2);
+            lcd_write_string("      ");
+            lcd_set_cursor(1, 2);
             lcd_write_string("Open");
         }
 
         if (openRightMotor) 
         {
             motors_start(RIGHT_MOTOR, DIR_CCW);
-            lcd_set_cursor(1, 11);
+            lcd_set_cursor(1, 10);
+            lcd_write_string("      ");
+            lcd_set_cursor(1, 10);
             lcd_write_string("Open");
         }
     }
@@ -34,14 +32,18 @@ void handleMotors(void)
         if (closeLeftMotor) 
         {
             motors_start(LEFT_MOTOR, DIR_CCW);
-            lcd_set_cursor(1, 3);
-            lcd_write_string("Close");
+            lcd_set_cursor(1, 2);
+            lcd_write_string("      ");
+            lcd_set_cursor(1, 2);
+            lcd_write_string("Closed");
         }
         if (closeRightMotor) 
         {
             motors_start(RIGHT_MOTOR, DIR_CW);
-            lcd_set_cursor(1, 11);
-            lcd_write_string("Open");
+            lcd_set_cursor(1, 10);
+            lcd_write_string("      ");
+            lcd_set_cursor(1, 10);
+            lcd_write_string("Closed");
         }
     }
 

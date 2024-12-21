@@ -40,9 +40,9 @@ void pb_init (void)
 
 void pb_eventISR(void)
 {
-    if (GPIO_PORTD_MIS_REG & PB_LEFT_MOTOR_OPEN_PIN)
+    if (GET_BIT(GPIO_PORTD_MIS_REG, PB_LEFT_MOTOR_OPEN_PIN))
     {
-        if (GPIO_PORTD_DATA_REG & PB_LEFT_MOTOR_OPEN_PIN) // rising edge
+        if (GET_BIT(GPIO_PORTD_DATA_REG, PB_LEFT_MOTOR_OPEN_PIN)) // rising edge
         {
             openLeftMotor = 1;
             stopLeftMotor = 0;
@@ -55,12 +55,13 @@ void pb_eventISR(void)
 
         closeLeftMotor = 0;
 
-        SET_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_OPEN_PIN);
-        return;
+//        SET_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_OPEN_PIN);
+//        GPIO_PORTD_ICR_REG |= 0xFF;
+//        return;
     }
-    else if (GPIO_PORTD_MIS_REG & PB_LEFT_MOTOR_CLOSE_PIN)
+    if (GET_BIT(GPIO_PORTD_MIS_REG, PB_LEFT_MOTOR_CLOSE_PIN))
     {
-        if (GPIO_PORTD_DATA_REG & PB_LEFT_MOTOR_CLOSE_PIN) // rising edge
+        if (GET_BIT(GPIO_PORTD_DATA_REG, PB_LEFT_MOTOR_CLOSE_PIN)) // rising edge
         {
             closeLeftMotor = 1;
             stopLeftMotor = 0;
@@ -73,12 +74,13 @@ void pb_eventISR(void)
 
         openLeftMotor = 0;
 
-        SET_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_CLOSE_PIN);    
-        return;
+//        SET_BIT(GPIO_PORTD_ICR_REG, PB_LEFT_MOTOR_CLOSE_PIN);
+//        GPIO_PORTD_ICR_REG |= 0xFF;
+//        return;
     }
-    else if (GPIO_PORTD_MIS_REG & PB_RIGHT_MOTOR_OPEN_PIN)
+    if (GET_BIT(GPIO_PORTD_MIS_REG, PB_RIGHT_MOTOR_OPEN_PIN))
     {
-        if (GPIO_PORTD_DATA_REG & PB_RIGHT_MOTOR_OPEN_PIN) // rising edge
+        if (GET_BIT(GPIO_PORTD_DATA_REG, PB_RIGHT_MOTOR_OPEN_PIN)) // rising edge
         {
             openRightMotor = 1;
             stopRightMotor = 0;
@@ -91,12 +93,13 @@ void pb_eventISR(void)
 
         closeRightMotor = 0;
 
-        SET_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_OPEN_PIN); 
-        return;   
+//        SET_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_OPEN_PIN);
+//        GPIO_PORTD_ICR_REG |= 0xFF;
+//        return;
     }
-    else if (GPIO_PORTD_MIS_REG & PB_RIGHT_MOTOR_CLOSE_PIN)
+    if (GET_BIT(GPIO_PORTD_MIS_REG, PB_RIGHT_MOTOR_CLOSE_PIN))
     {
-        if (GPIO_PORTD_DATA_REG & PB_RIGHT_MOTOR_CLOSE_PIN) // rising edge
+        if (GET_BIT(GPIO_PORTD_DATA_REG, PB_RIGHT_MOTOR_CLOSE_PIN)) // rising edge
         {
             closeRightMotor = 1;
             stopRightMotor = 0;
@@ -109,7 +112,9 @@ void pb_eventISR(void)
 
         openRightMotor = 0;
 
-        SET_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_CLOSE_PIN); 
-        return;
+//        SET_BIT(GPIO_PORTD_ICR_REG, PB_RIGHT_MOTOR_CLOSE_PIN);
+//        GPIO_PORTD_ICR_REG |= 0xFF;
+//        return;
     }
+    GPIO_PORTD_ICR_REG |= 0xFF;
 }

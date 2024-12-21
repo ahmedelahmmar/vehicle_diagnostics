@@ -18,26 +18,26 @@
  * PC7           |   D7         |   Data bit 7
  */
 
-#define LCD_RS_PORT     GPIOB
-#define LCD_RS_PIN      GPIO_PIN_0
+#define LCD_RS_PORT     GPIOE
+#define LCD_RS_PIN      GPIO_PIN_1
 
-#define LCD_RW_PORT     GPIOB
-#define LCD_RW_PIN      GPIO_PIN_5
+#define LCD_RW_PORT     GPIOE
+#define LCD_RW_PIN      GPIO_PIN_2
 
-#define LCD_EN_PORT     GPIOE
-#define LCD_EN_PIN      GPIO_PIN_4
+#define LCD_EN_PORT     GPIOB
+#define LCD_EN_PIN      GPIO_PIN_5
 
-#define LCD_D4_PORT     GPIOE
-#define LCD_D4_PIN      GPIO_PIN_5
+#define LCD_D4_PORT     GPIOB
+#define LCD_D4_PIN      GPIO_PIN_0
 
-#define LCD_D5_PORT     GPIOC
-#define LCD_D5_PIN      GPIO_PIN_5
+#define LCD_D5_PORT     GPIOE
+#define LCD_D5_PIN      GPIO_PIN_4
 
-#define LCD_D6_PORT     GPIOC
-#define LCD_D6_PIN      GPIO_PIN_6
+#define LCD_D6_PORT     GPIOE
+#define LCD_D6_PIN      GPIO_PIN_5
 
-#define LCD_D7_PORT     GPIOC
-#define LCD_D7_PIN      GPIO_PIN_7
+#define LCD_D7_PORT     GPIOB
+#define LCD_D7_PIN      GPIO_PIN_4
 
 typedef enum
 {

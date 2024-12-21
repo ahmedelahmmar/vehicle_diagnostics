@@ -11,8 +11,8 @@ typedef enum
     GPIOB,
     GPIOC,
     GPIOD,
-    GPIOF,
     GPIOE,
+    GPIOF,
 
 } GPIO_Port_t;
 

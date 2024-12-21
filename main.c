@@ -1,13 +1,6 @@
 #include "./include/app.h"
 #define DTC_ACCIDENT_MIGHT_HAPPENED "P001 - ACCIDENT"
 #define DTC_ENGINE_HIGH_TEMPERATURE "P002 - HIGH TEMP"
-void SysTick_Init(void)
-{
-    SYSTICK_CTRL_REG = 0;
-    SYSTICK_CURRENT_REG = 0;
-    SYSTICK_RELOAD_REG = 7999999;
-    SYSTICK_CTRL_REG |= 0x05;
-}
 
 void Leds_Init(void)
 {
@@ -28,14 +21,20 @@ int dist;
 int main(void)
 {
 
-    pb_init();
+//    pb_init();
 
     adc0_init();
+
+    lcd_init();
+    lcd_set_cursor(0, 0);
+    lcd_write_string("T:");
+    lcd_set_cursor(1, 0);
+    lcd_write_string("D:");
     Ultrasonic_Init();
 
     while(1)
     {
-        handleMotors();
+//        handleMotors();
         temp = adc0_temp();
         lcd_set_cursor(0,2);
         lcd_write_int(temp);

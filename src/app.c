@@ -1,8 +1,7 @@
 #include "../include/app.h"
 
-
-static uint8_t current_temperature;
-static uint8_t current_distance;
+static uint8_t current_temperature, last_temperature;
+static uint8_t current_distance, last_distance;
 
 
 static void handle_motors(void);
@@ -15,10 +14,10 @@ void app_start_operation(void)
     lcd_set_cursor(0, 0);
     lcd_write_string("Temp:");
     lcd_set_cursor(0, 7);
-    lcd_write_string("°C");
+    lcd_write_string("C");
     lcd_set_cursor(0, 9);
     lcd_write_string("D:");
-    lcd_set_cursor(0, 13);
+    lcd_set_cursor(0, 14);
     lcd_write_string("cm");
     lcd_set_cursor(1, 0);
     lcd_write_string("Left: C");
@@ -29,13 +28,14 @@ void app_start_operation(void)
     {
         handle_motors();
 
+        last_distance = current_distance;
         current_distance = Ultrasonic_ReadDistance();
         lcd_set_cursor(0, 11);
         lcd_write_string("   ");
         lcd_set_cursor(0, 11);
         lcd_write_int(current_distance);
 
-        if (current_distance < 10)
+        if ( (current_distance < 10) and (last_distance >= 10) )
         {
             app_log_error(P001_ACCIDENT_MIGHT_HAPPEN);
         }
@@ -46,7 +46,7 @@ void app_start_operation(void)
         lcd_set_cursor(0,5);
         lcd_write_int(current_temperature);
 
-        if (current_temperature > 30)
+        if ( (current_temperature > 30) and (last_temperature <= 30) )
         {
             app_log_error(P002_ENGINE_HIGH_TEMPERATURE);
         }
@@ -123,6 +123,8 @@ void app_log_error(DTC_Code_t error)
             block_counter = EEPROM_RetrieveData(0, 0);  // Block counter saved in Block 0, Offset 0
             offset_counter = EEPROM_RetrieveData(0, 1); // Offset counter saved in Block 0, Offset 1
             initialized = 1;
+
+            if ( (0 == block_counter) and (offset_counter < 2) ) offset_counter = 2;
         }
 
         // Write the error code to the current block and offset

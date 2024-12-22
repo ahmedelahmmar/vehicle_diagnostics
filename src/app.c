@@ -2,6 +2,7 @@
 
 static uint8_t current_temperature, last_temperature;
 static uint8_t current_distance, last_distance;
+static uint8_t fan_shutdown_flag = 0;
 
 
 static void handle_motors(void);
@@ -49,6 +50,26 @@ void app_start_operation(void)
         if ( (current_temperature > 30) and (last_temperature <= 30) )
         {
             app_log_error(P002_ENGINE_HIGH_TEMPERATURE);
+        }
+
+        if (gpio_getPinLogic(PB_FAN_INPUT_PORT, PB_FAN_INPUT_PIN))
+        {
+            delay_ms(100);
+            if (gpio_getPinLogic(PB_FAN_INPUT_PORT, PB_FAN_INPUT_PIN))
+            {
+                gpio_togglePinLogic(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN);
+            }
+        }
+
+        if ((GPIO_LOW == gpio_getPinLogic(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN)) and !(fan_shutdown_flag))
+        {
+            app_log_error(P003_ENGINE_FAN_SHUTDOWN);
+            fan_shutdown_flag = 1;
+        }
+
+        if (gpio_getPinLogic(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN))
+        {
+            fan_shutdown_flag = 0;
         }
     
         delay_ms(1000);

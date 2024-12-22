@@ -51,6 +51,7 @@ typedef enum
 
 void gpio_initPin(GPIO_Port_t port, GPIO_Pin_t pin, GPIO_Direction_t direction);
 void gpio_setPinLogic(GPIO_Port_t port, GPIO_Pin_t pin, GPIO_Logic_t logic);
+void gpio_togglePinLogic(GPIO_Port_t port, GPIO_Pin_t pin);
 unsigned char gpio_getPinLogic(GPIO_Port_t port, GPIO_Pin_t pin);
 
 #endif /* __GPIO_H__ */

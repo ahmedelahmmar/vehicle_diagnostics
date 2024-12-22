@@ -105,6 +105,12 @@ void gpio_setPinLogic(GPIO_Port_t port, GPIO_Pin_t pin, GPIO_Logic_t logic)
 }
 
 
+void gpio_togglePinLogic(GPIO_Port_t port, GPIO_Pin_t pin)
+{
+    TOGGLE_BIT(*DATA[port], pin);
+}
+
+
 unsigned char gpio_getPinLogic(GPIO_Port_t port, GPIO_Pin_t pin)
 {
     return GET_BIT(*DATA[port], pin);

@@ -12,10 +12,16 @@
 #include "ultrasonic.h"
 
 
-#define DTC_ACCIDENT_MIGHT_HAPPENED "P001 - ACCIDENT"
-#define DTC_ENGINE_HIGH_TEMPERATURE "P002 - HIGH TEMP"
+typedef enum
+{
+    P001_ACCIDENT_MIGHT_HAPPEN=1,
+    P002_ENGINE_HIGH_TEMPERATURE,
 
-void handleMotors(void);
-void start_app(void);
+} DTC_Code_t;
+
+
+void app_start_operation(void);
+void app_log_error(DTC_Code_t error);
+void app_display_logged_errors(void);
 
 #endif /* __APP_H__*/

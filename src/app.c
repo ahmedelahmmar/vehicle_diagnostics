@@ -1,7 +1,55 @@
 #include "../include/app.h"
 
 
-void handleMotors(void)
+static uint8_t current_temperature;
+static uint8_t current_distance;
+
+
+static void handle_motors(void);
+static void handle_temperature_sensor(void);
+static void handle_ultrasonic_sesnor(void);
+
+
+void app_start_operation(void)
+{
+    lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
+    lcd_set_cursor(0, 0);
+    lcd_write_string("T:");
+    lcd_set_cursor(0, 5);
+    lcd_write_string("C");
+    lcd_set_cursor(0, 7);
+    lcd_write_string("D:");
+    lcd_set_cursor(0, 13);
+    lcd_write_string("cm");
+    lcd_set_cursor(1, 0);
+    lcd_write_string("L:Closed");
+    lcd_set_cursor(1, 8);
+    lcd_write_string("R:Closed");
+
+    // while(1)
+    // {
+    //     handleMotors();
+    //     temp = adc0_temp();
+    //     lcd_set_cursor(0,5);
+    //     lcd_write_int(temp);
+
+    //     dist = Ultrasonic_ReadDistance();
+    //     lcd_set_cursor(0, 9);
+    //     lcd_write_string("    ");
+    //     lcd_set_cursor(0, 9);
+    //     lcd_write_int(dist);
+    
+    //     delay_ms(1000);
+    // }
+    while ( uart0_getLastRecievedByte() != '3' )
+    {
+
+    }
+
+    lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
+}
+
+void handle_motors(void)
 {
     isThereAnOpenRequest = openLeftMotor or openRightMotor;
     isThereACloseRequest = closeLeftMotor or closeRightMotor;

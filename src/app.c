@@ -26,24 +26,33 @@ void app_start_operation(void)
     lcd_set_cursor(1, 8);
     lcd_write_string("R:Closed");
 
-    // while(1)
-    // {
-    //     handleMotors();
-    //     temp = adc0_temp();
-    //     lcd_set_cursor(0,5);
-    //     lcd_write_int(temp);
-
-    //     dist = Ultrasonic_ReadDistance();
-    //     lcd_set_cursor(0, 9);
-    //     lcd_write_string("    ");
-    //     lcd_set_cursor(0, 9);
-    //     lcd_write_int(dist);
-    
-    //     delay_ms(1000);
-    // }
     while ( uart0_getLastRecievedByte() != '3' )
     {
+        handleMotors();
 
+        current_distance = Ultrasonic_ReadDistance();
+        lcd_set_cursor(0, 9);
+        lcd_write_string("    ");
+        lcd_set_cursor(0, 9);
+        lcd_write_int(current_distance);
+
+        if (current_distance < 10)
+        {
+            app_log_error(P001_ACCIDENT_MIGHT_HAPPEN);
+        }
+
+        current_temperature = adc0_temp();
+        lcd_set_cursor(0, 5);
+        lcd_write_string("    ");
+        lcd_set_cursor(0,5);
+        lcd_write_int(current_temperature);
+
+        if (current_temperature > 90)
+        {
+            app_log_error(P002_ENGINE_HIGH_TEMPERATURE);
+        }
+    
+        delay_ms(1000);
     }
 
     lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);

@@ -11,21 +11,20 @@ int main(void)
     Ultrasonic_Init();
     delay_ms(250);
 
-    uart0_sendString("Vehicle Fault Detection and Logging System (VFDLS)\n\n\r");
-    uart0_sendString("Please select one of the following options:\n\r");
-    uart0_sendString("1. Start Operation Cycle.\n\r");
-    uart0_sendString("2. Retrieve Logged Errors.\n\r");
-
-
     while (1)
     {
+        uart0_sendString("Vehicle Fault Detection and Logging System (VFDLS)\n\n\r");
+        uart0_sendString("Please select one of the following options:\n\r");
+        uart0_sendString("1. Start Operation Cycle.\n\r");
+        uart0_sendString("2. Retrieve Logged Errors.\n\r");
+
         recieved_byte = uart0_getLastRecievedByte();
 
         if (0xFF != recieved_byte)
         {
             if ('1' == recieved_byte)
             {
-                uart0_sendString("\n\rInitializing Operation Cycle");
+                uart0_sendString("Initializing Operation Cycle");
 
                 for (uint8_t i = 0; i < 10; i++)
                 {
@@ -33,18 +32,18 @@ int main(void)
                     delay_ms(250);
                 }
 
-                uart0_sendString("\n\rOperation Started Succesfully\n\r");
+                uart0_sendString("Operation Started Succesfully\n\r");
                 uart0_sendString("Press 3 to terminate the operation cycle\n\r");
 
                 app_start_operation();
 
-            uart0_sendString("\n\r Operation Cycle Terminated.\n\r");
+                uart0_sendString("Operation Cycle Terminated.\n\r");
             }
             else if ('2' == recieved_byte)
             {
-
+                uart0_sendString("Displaying Logged Errors...\n\r");
+                app_display_logged_errors();
             }
         }
     }
-
 }

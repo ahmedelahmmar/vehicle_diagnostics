@@ -26,13 +26,14 @@ int main(void)
             {
                 uart0_sendString("Initializing Operation Cycle");
 
-                for (uint8_t i = 0; i < 10; i++)
+                uint8_t i = 0;
+                for (; i < 10; i++)
                 {
                     uart0_sendByte('.');
                     delay_ms(250);
                 }
 
-                uart0_sendString("Operation Started Succesfully\n\r");
+                uart0_sendString("\n\rOperation Started Succesfully\n\r");
                 uart0_sendString("Press 3 to terminate the operation cycle\n\r");
 
                 app_start_operation();
@@ -41,7 +42,6 @@ int main(void)
             }
             else if ('2' == recieved_byte)
             {
-                uart0_sendString("Displaying Logged Errors...\n\r");
                 app_display_logged_errors();
             }
         }

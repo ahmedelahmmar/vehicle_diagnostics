@@ -10,6 +10,7 @@
 #include "lcd.h"
 #include "adc.h"
 #include "ultrasonic.h"
+#include "EEPROM.h"
 
 
 typedef enum

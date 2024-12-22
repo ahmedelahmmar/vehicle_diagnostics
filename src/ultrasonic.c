@@ -15,14 +15,6 @@ void SysTick_Wait(unsigned long delay)
     while ((SYSTICK_CTRL_REG & 0x00010000) == 0); // Wait for count flag
 }
 
-void SysTick_Wait10us(unsigned long delay)
-{
-    unsigned long i;  // Declare the loop variable at the top
-    for (i = 0; i < delay; i++) {
-        SysTick_Wait(160);  // 10us delay at 16 MHz clock
-    }
-}
-
 void Ultrasonic_Init(void) {
     SET_BIT(SYSCTL_RCGCGPIO_REG, 1);    /* enable clock to PORTB */
     while(GET_BIT(SYSCTL_PRGPIO_REG, 1) == 0);
@@ -42,9 +34,9 @@ uint32_t Ultrasonic_ReadDistance(void) {
 
     // Send trigger pulse
     CLEAR_BIT(GPIO_PORTB_DATA_REG, TRIGGER_PIN); // Set Trigger low
-    SysTick_Wait10us(1);                // Wait 10us
+    SysTick_Wait(32);                // Wait 2us
     SET_BIT(GPIO_PORTB_DATA_REG, TRIGGER_PIN);  // Set Trigger high
-    SysTick_Wait10us(1);                // Wait 10us
+    SysTick_Wait(160);                // Wait 10us
     CLEAR_BIT(GPIO_PORTB_DATA_REG, TRIGGER_PIN); // Set Trigger low
 
     // Wait for Echo signal to go high
@@ -52,10 +44,10 @@ uint32_t Ultrasonic_ReadDistance(void) {
     // Measure time while Echo signal is high
     while (GET_BIT(GPIO_PORTB_DATA_REG, ECHO_PIN) != 0) {
         duration++;
-        SysTick_Wait(8);
+        SysTick_Wait(16);
     }
 
-    distance = (duration) / (117.6); // Convert to cm
+    distance = duration * 0.068; // Convert to cm
 
     return distance;
 }

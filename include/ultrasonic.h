@@ -24,7 +24,6 @@
 
 void SysTick_Init(void);
 void SysTick_Wait(unsigned long delay);
-void SysTick_Wait10us(unsigned long delay);
 
 void Ultrasonic_Init(void); // Function to initialize the HC-SR04 ultrasonic sensor
 

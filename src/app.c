@@ -13,26 +13,26 @@ void app_start_operation(void)
 {
     lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
     lcd_set_cursor(0, 0);
-    lcd_write_string("T:");
-    lcd_set_cursor(0, 5);
-    lcd_write_string("C");
+    lcd_write_string("Temp:");
     lcd_set_cursor(0, 7);
+    lcd_write_string("°C");
+    lcd_set_cursor(0, 9);
     lcd_write_string("D:");
     lcd_set_cursor(0, 13);
     lcd_write_string("cm");
     lcd_set_cursor(1, 0);
-    lcd_write_string("L:Closed");
+    lcd_write_string("Left: C");
     lcd_set_cursor(1, 8);
-    lcd_write_string("R:Closed");
+    lcd_write_string("Right: C");
 
     while ( uart0_getLastRecievedByte() != '3' )
     {
         handle_motors();
 
         current_distance = Ultrasonic_ReadDistance();
-        lcd_set_cursor(0, 9);
-        lcd_write_string("    ");
-        lcd_set_cursor(0, 9);
+        lcd_set_cursor(0, 11);
+        lcd_write_string("   ");
+        lcd_set_cursor(0, 11);
         lcd_write_int(current_distance);
 
         if (current_distance < 10)
@@ -42,11 +42,11 @@ void app_start_operation(void)
 
         current_temperature = adc0_temp();
         lcd_set_cursor(0, 5);
-        lcd_write_string("    ");
+        lcd_write_string("  ");
         lcd_set_cursor(0,5);
         lcd_write_int(current_temperature);
 
-        if (current_temperature > 90)
+        if (current_temperature > 30)
         {
             app_log_error(P002_ENGINE_HIGH_TEMPERATURE);
         }
@@ -67,19 +67,19 @@ void handle_motors(void)
         if (openLeftMotor)
         {
             motors_start(LEFT_MOTOR, DIR_CW);
-            lcd_set_cursor(1, 2);
-            lcd_write_string("      ");
-            lcd_set_cursor(1, 2);
-            lcd_write_string("Open");
+            lcd_set_cursor(1, 5);
+            lcd_write_string("  ");
+            lcd_set_cursor(1, 5);
+            lcd_write_string(" O");
         }
 
         if (openRightMotor) 
         {
             motors_start(RIGHT_MOTOR, DIR_CCW);
-            lcd_set_cursor(1, 10);
-            lcd_write_string("      ");
-            lcd_set_cursor(1, 10);
-            lcd_write_string("Open");
+            lcd_set_cursor(1, 14);
+            lcd_write_string("  ");
+            lcd_set_cursor(1, 14);
+            lcd_write_string(" O");
         }
     }
 
@@ -88,18 +88,18 @@ void handle_motors(void)
         if (closeLeftMotor) 
         {
             motors_start(LEFT_MOTOR, DIR_CCW);
-            lcd_set_cursor(1, 2);
-            lcd_write_string("      ");
-            lcd_set_cursor(1, 2);
-            lcd_write_string("Closed");
+            lcd_set_cursor(1, 5);
+             lcd_write_string("  ");
+             lcd_set_cursor(1, 5);
+             lcd_write_string(" C");
         }
         if (closeRightMotor) 
         {
             motors_start(RIGHT_MOTOR, DIR_CW);
-            lcd_set_cursor(1, 10);
-            lcd_write_string("      ");
-            lcd_set_cursor(1, 10);
-            lcd_write_string("Closed");
+            lcd_set_cursor(1, 14);
+            lcd_write_string("  ");
+            lcd_set_cursor(1, 14);
+            lcd_write_string(" C");
         }
     }
 

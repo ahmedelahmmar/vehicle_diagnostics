@@ -28,3 +28,4 @@ int adc0_temp(void)
     ADC0_ISC_REG |= (1<<3);                 /* clear completion flag  */
     return temprature;
 }
+

@@ -50,6 +50,7 @@ void app_start_operation(void)
         if ( (current_distance < 10) and (last_distance >= 10) )
         {
             app_log_error(P001_ACCIDENT_MIGHT_HAPPEN);
+            uart0_sendString("\n\rError [P001_ACCIDENT_MIGHT_HAPPEN] logged!\n\r");
         }
 
         current_temperature = adc0_temp();
@@ -61,17 +62,33 @@ void app_start_operation(void)
         if ( (current_temperature > 30) and (last_temperature <= 30) )
         {
             app_log_error(P002_ENGINE_HIGH_TEMPERATURE);
+            uart0_sendString("\n\rError [P002_ENGINE_HIGH_TEMPERATURE] logged!\n\r");
         }
 
         if ('2' == recieved_byte)
         {
             lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
-            lcd_set_cursor(0, 5);
+            lcd_set_cursor(0, 4);
             lcd_write_string("Fetching");
-            lcd_set_cursor(1, 2);
+            lcd_set_cursor(1, 3);
             lcd_write_string("Error Logs");
 
             app_display_logged_errors();
+
+            lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
+
+            lcd_set_cursor(0, 0);
+            lcd_write_string("Temp:");
+            lcd_set_cursor(0, 7);
+            lcd_write_string("C");
+            lcd_set_cursor(0, 9);
+            lcd_write_string("D:");
+            lcd_set_cursor(0, 14);
+            lcd_write_string("cm");
+            lcd_set_cursor(1, 0);
+            lcd_write_string("Left: C");
+            lcd_set_cursor(1, 8);
+            lcd_write_string("Right: C");
         }
         
         recieved_byte = uart0_getLastRecievedByte();
@@ -167,7 +184,6 @@ void app_log_error(DTC_Code_t error)
                 offset_counter = 2;
             }
 
-
             EEPROM_LogData(0, 0, block_counter);
         }
 
@@ -183,11 +199,11 @@ void app_display_logged_errors(void)
 
     if ( (0 == block_counter) and (2 == offset_counter) )
     {
-        uart0_sendString("No Errors Logged.");
+        uart0_sendString("\n\r\tNo Errors Logged.\n\r");
         return;
     }
 
-    uart0_sendString("Fetching Logged Errors");
+    uart0_sendString("\n\r\tFetching Logged Errors");
 
     uint8_t i = 0;
     for (; i < 10; i++)
@@ -196,7 +212,7 @@ void app_display_logged_errors(void)
         delay_ms(250);
     }
 
-    uart0_sendString("\n\r");
+    uart0_sendString("\n\n\r");
 
     for (i = 0; i <= block_counter; i++)
     {
@@ -209,11 +225,11 @@ void app_display_logged_errors(void)
             switch (current_logged_error)
             {
                 case 1:
-                    uart0_sendString("[P001] Accident Might Happen\n\r");
+                    uart0_sendString("\t[P001] Accident Might Happen\n\r");
                     break;
 
                 case 2:
-                    uart0_sendString("[P002] Engine High Temperature\n\r");
+                    uart0_sendString("\t[P002] Engine High Temperature\n\r");
                     break;
 
                 default: break;

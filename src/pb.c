@@ -36,9 +36,9 @@ void pb_init (void)
     SET_BIT(NVIC_EN0_REG, 3);    // interrupt enabled
     NVIC_PRI0_REG &= 0x00FFFFFF;     //set priority to zero
 
-    gpio_initPin(PB_FAN_INPUT_PORT, PB_FAN_INPUT_PIN, GPIO_INPUT_PULLDOWN);
-    gpio_initPin(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN, GPIO_OUTPUT);
-    gpio_setPinLogic(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN, GPIO_HIGH);
+//    gpio_initPin(PB_FAN_INPUT_PORT, PB_FAN_INPUT_PIN, GPIO_INPUT_PULLDOWN);
+//    gpio_initPin(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN, GPIO_OUTPUT);
+//    gpio_setPinLogic(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN, GPIO_HIGH);
 }
 
 

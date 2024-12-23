@@ -5,6 +5,7 @@ volatile recieved_byte = 0xFF;
 int main(void)
 {
     pb_init();
+    motors_init();
     lcd_init();
     adc0_init();
     uart0_init();
@@ -52,22 +53,16 @@ int main(void)
 
                 uart0_sendString("Operation Cycle Terminated.\n\r");
             }
-            else if ('2' == recieved_byte)
+            else
             {
-                lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
-                lcd_set_cursor(0, 5);
-                lcd_write_string("Fetching");
-                lcd_set_cursor(1, 2);
-                lcd_write_string("Error Logs");
-
-                app_display_logged_errors();
+                uart0_sendString("Invalid Option!\n\r");
             }
 
             lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
             lcd_set_cursor(0, 3);
             lcd_write_string("VFDL System");
             lcd_set_cursor(1, 1);
-            lcd_write_string("1:Start 2:Logs");
+            lcd_write_string("1: Initialize");
         }
     }
 }

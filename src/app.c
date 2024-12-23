@@ -3,15 +3,24 @@
 static uint8_t current_temperature, last_temperature;
 static uint8_t current_distance, last_distance;
 static uint8_t fan_shutdown_flag = 0;
-
+static uint8_t recieved_byte = 0xFF;
 
 static void handle_motors(void);
-
 
 
 void app_start_operation(void)
 {
     lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
+
+    lcd_set_cursor(0, 1);
+    lcd_write_string("Initializing");
+    lcd_set_cursor(1, 3);
+    lcd_write_string("The System");
+
+    delay_ms(1000);
+
+    lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
+
     lcd_set_cursor(0, 0);
     lcd_write_string("Temp:");
     lcd_set_cursor(0, 7);
@@ -25,7 +34,9 @@ void app_start_operation(void)
     lcd_set_cursor(1, 8);
     lcd_write_string("Right: C");
 
-    while ( uart0_getLastRecievedByte() != '3' )
+    recieved_byte = uart0_getLastRecievedByte();
+
+    while ( '3' != recieved_byte)
     {
         handle_motors();
 
@@ -52,31 +63,25 @@ void app_start_operation(void)
             app_log_error(P002_ENGINE_HIGH_TEMPERATURE);
         }
 
-        if (gpio_getPinLogic(PB_FAN_INPUT_PORT, PB_FAN_INPUT_PIN))
+        if ('2' == recieved_byte)
         {
-            delay_ms(100);
-            if (gpio_getPinLogic(PB_FAN_INPUT_PORT, PB_FAN_INPUT_PIN))
-            {
-                gpio_togglePinLogic(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN);
-            }
-        }
+            lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
+            lcd_set_cursor(0, 5);
+            lcd_write_string("Fetching");
+            lcd_set_cursor(1, 2);
+            lcd_write_string("Error Logs");
 
-        if ((GPIO_LOW == gpio_getPinLogic(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN)) and !(fan_shutdown_flag))
-        {
-            app_log_error(P003_ENGINE_FAN_SHUTDOWN);
-            fan_shutdown_flag = 1;
+            app_display_logged_errors();
         }
+        
+        recieved_byte = uart0_getLastRecievedByte();
 
-        if (gpio_getPinLogic(PB_FAN_OUTPUT_PORT, PB_FAN_OUTPUT_PIN))
-        {
-            fan_shutdown_flag = 0;
-        }
-    
         delay_ms(1000);
     }
 
     lcd_send_command(LCD_COMMAND_CLEAR_DISPLAY);
 }
+
 
 void handle_motors(void)
 {

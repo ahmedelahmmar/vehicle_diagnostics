@@ -7,14 +7,16 @@
 
 // Pins below are on gpio port b
 #define LEFT_MOTOR_IN1_PORT         GPIOB
-#define LEFT_MOTOR_IN2_PORT         GPIOB
-#define RIGHT_MOTOR_IN1_PORT        GPIOB
-#define RIGHT_MOTOR_IN2_PORT        GPIOB
-/****************************************/
-#define LEFT_MOTOR_IN1_PIN          GPIO_PIN_4
-#define LEFT_MOTOR_IN2_PIN          GPIO_PIN_5
-#define RIGHT_MOTOR_IN1_PIN         GPIO_PIN_6
-#define RIGHT_MOTOR_IN2_PIN         GPIO_PIN_7
+#define LEFT_MOTOR_IN1_PIN          GPIO_PIN_6
+
+#define LEFT_MOTOR_IN2_PORT         GPIOA
+#define LEFT_MOTOR_IN2_PIN          GPIO_PIN_4
+
+#define RIGHT_MOTOR_IN1_PORT        GPIOA
+#define RIGHT_MOTOR_IN1_PIN         GPIO_PIN_3
+
+#define RIGHT_MOTOR_IN2_PORT        GPIOA
+#define RIGHT_MOTOR_IN2_PIN         GPIO_PIN_2
 
 
 typedef enum 
